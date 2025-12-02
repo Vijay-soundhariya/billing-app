@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block content %}
+<h2 class="fw-bold mb-3">Manage Customers</h2>
+
+<form method="get" action="{{ url_for('customers') }}" class="mb-3">
+  <div class="input-group">
+    <input type="text" name="query" value="{{ query }}" class="form-control" placeholder="Search by name or phone">
+    <button class="btn btn-primary">Search</button>
+  </div>
+</form>
+
+<a href="{{ url_for('add_customer') }}" class="btn btn-success mb-3">+ Add Customer</a>
+
+<table class="table table-striped shadow-sm">
+  <thead class="table-dark">
+    <tr>
+      <th>Name</th>
+      <th>Phone</th>
+      <th>Notes</th>
+      <th>Orders</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    {% for c in customers %}
+    <tr>
+      <td>{{ c.name }}</td>
+      <td>{{ c.phone }}</td>
+      <td>{{ c.notes }}</td>
+      <td>
+        {% for o in customer_orders.get(c.id, []) %}
+          <div><small>{{ o.invoice }} | {{ o.date }} | Rs. {{ "%.2f"|format(o.total) }}</small></div>
+        {% endfor %}
+      </td>
+      <td>
+        <a href="{{ url_for('delete_customer', id=c.id) }}" class="btn btn-sm btn-danger">Delete</a>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+
+</table>
+{% endblock %}

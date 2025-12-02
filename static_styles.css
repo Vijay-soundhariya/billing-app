@@ -1,0 +1,8 @@
+/* static/style.css */
+body { background: #f6f8fa; font-family: Inter, Arial, sans-serif; }
+.card { border-radius: 10px; }
+.table-danger { background: #ffe6e6; }
+.table-warning { background: #fff7e6; }
+.navbar .btn { margin-left: 6px; }
+.welcome-cards .card { transition: transform .12s ease; }
+.welcome-cards .card:hover { transform: translateY(-4px); box-shadow: 0 6px 18px rgba(0,0,0,0.08); }

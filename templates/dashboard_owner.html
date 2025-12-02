@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Welcome, Owner</h2>
+<div class="row">
+  <div class="col-md-3"><div class="card p-3"><h5>Total Sales</h5><h3>₹{{ "%.2f"|format(total_sales) }}</h3></div></div>
+  <div class="col-md-3"><div class="card p-3"><h5>Orders</h5><h3>{{ total_orders }}</h3></div></div>
+  <div class="col-md-3"><div class="card p-3"><h5>Products</h5><h3>{{ total_products }}</h3></div></div>
+  <div class="col-md-3"><div class="card p-3"><h5>Customers</h5><h3>{{ total_customers }}</h3></div></div>
+</div>
+<div class="mt-3">
+  <a class="btn btn-primary" href="{{ url_for('products') }}">Manage Products</a>
+  <a class="btn btn-success" href="{{ url_for('add_order') }}">Add Order</a>
+  <a class="btn btn-secondary" href="{{ url_for('orders') }}">Orders</a>
+  <a class="btn btn-info" href="{{ url_for('customers') }}">Customers</a>
+  <a class="btn btn-warning" href="{{ url_for('create_staff') }}">Manage Staff</a>
+  <a class="btn btn-dark" href="{{ url_for('admin_logs') }}">Staff Login Logs</a>
+
+</div>
+
+<h4 class="mt-4">Low stock</h4>
+<ul>
+  {% for p in low_stock %}
+    <li>{{ p.name }} — {{ p.quantity }}</li>
+  {% else %}
+    <li>No low stock</li>
+  {% endfor %}
+</ul>
+
+<h4 class="mt-4">Top sellers</h4>
+<ul>
+  {% for name, qty in top_sellers %}
+    <li>{{ name }} — {{ qty }}</li>
+  {% else %}
+    <li>No sales yet</li>
+  {% endfor %}
+</ul>
+{% endblock %}

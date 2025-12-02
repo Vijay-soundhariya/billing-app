@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block content %}
+<h3>Order Summary</h3>
+<p><strong>Invoice:</strong> {{ order.invoice_no }}</p>
+<p><strong>Date:</strong> {{ order.date }}</p>
+<p><strong>Customer:</strong> {{ order.customer.name }} ({{ order.customer.phone }})</p>
+
+<table class="table">
+  <thead><tr><th>Item</th><th>Qty</th><th>Price</th><th>Line</th></tr></thead>
+  <tbody>
+    {% for it in order.items %}
+    <tr>
+      <td>{{ it.product.name }}</td>
+      <td>{{ it.quantity }}</td>
+      <td>₹{{ "%.2f"|format(it.price) }}</td>
+      <td>₹{{ "%.2f"|format(it.price * it.quantity) }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<p><strong>Subtotal:</strong> ₹{{ "%.2f"|format(order.subtotal) }}</p>
+<p><strong>GST:</strong> ₹{{ "%.2f"|format(order.tax_total) }}</p>
+<p><strong>Total:</strong> ₹{{ "%.2f"|format(order.total_amount) }}</p>
+
+<p>
+  <a class="btn btn-success" href="{{ whatsapp_link }}" target="_blank">Open WhatsApp</a>
+  <a class="btn btn-primary" href="{{ url_for('print_bill', order_id=order.id) }}">Download PDF</a>
+  <a class="btn btn-warning" href="{{ url_for('edit_order', id=order.id) }}">Edit Order</a>
+</p>
+{% endblock %}

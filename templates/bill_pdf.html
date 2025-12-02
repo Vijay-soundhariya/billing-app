@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+body { font-family: Arial; }
+table { width: 100%; border-collapse: collapse; }
+td, th { padding: 8px; border: 1px solid black; }
+</style>
+</head>
+<body>
+
+<h2>{{ business_name }}</h2>
+<p><b>{{ customer.name }}</b> ({{ customer.phone }})</p>
+
+<table>
+<tr>
+  <th>Item</th>
+  <th>Qty</th>
+  <th>Price</th>
+  <th>Total</th>
+</tr>
+
+{% for item in items %}
+<tr>
+  <td>{{ item.product.name }}</td>
+  <td>{{ item.quantity }}</td>
+  <td>₹{{ item.price }}</td>
+  <td>₹{{ item.price * item.quantity }}</td>
+</tr>
+{% endfor %}
+
+</table>
+
+<h3 style="text-align:right;">Total: ₹{{ order.total_amount }}</h3>
+
+</body>
+</html>
