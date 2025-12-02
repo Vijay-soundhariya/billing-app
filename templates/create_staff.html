@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {% extends "base.html" %}
 {% block content %}
 <h3>Create Staff</h3>
@@ -17,3 +18,24 @@
   </tbody>
 </table>
 {% endblock %}
+=======
+{% extends "base.html" %}
+{% block content %}
+<h3>Create Staff</h3>
+<form method="post" class="row g-2">
+  <div class="col-md-4"><input name="email" class="form-control" placeholder="email"></div>
+  <div class="col-md-4"><input name="password" class="form-control" placeholder="password"></div>
+  <div class="col-md-4"><button class="btn btn-primary">Create</button></div>
+</form>
+
+<h4 class="mt-4">Existing staff</h4>
+<table class="table">
+  <thead><tr><th>Email</th></tr></thead>
+  <tbody>
+    {% for s in staff_list %}
+      <tr><td>{{ s.email }}</td></tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}
+>>>>>>> 263a03c467594d985d8b96fece724ac1bd2f03e6
