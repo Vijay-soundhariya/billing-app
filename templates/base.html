@@ -7,31 +7,24 @@
   <style>body{padding-top:70px;}</style>
 </head>
 <body>
-<nav class="navbar navbar-dark bg-dark px-3">
-    <span class="navbar-brand">SmallBiz Tool</span>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <a class="navbar-brand" href="/">SmallBiz Tool</a>
 
-    {% if current_user.is_authenticated %}
-        
-        {% if current_user.is_owner %}
-            <!-- OWNER MENU -->
-            <a class="btn btn-primary btn-sm me-2" href="/dashboard">Dashboard</a>
-            <a class="btn btn-info btn-sm me-2" href="/products">Products</a>
-            <a class="btn btn-warning btn-sm me-2" href="/owner/create_staff">Manage Staff</a>
-            <a class="btn btn-dark btn-sm me-2" href="/admin/logs">Staff Logs</a>
+  {% if current_user.is_authenticated %}
+    <ul class="navbar-nav">
+      <li class="nav-item"><a class="nav-link" href="/dashboard">Dashboard</a></li>
+      <li class="nav-item"><a class="nav-link" href="/products">Products</a></li>
+      <li class="nav-item"><a class="nav-link" href="/manage_staff">Manage Staff</a></li>
+      <li class="nav-item"><a class="nav-link" href="/staff_logs">Staff Logs</a></li>
+    </ul>
 
-        {% else %}
-            <!-- STAFF MENU -->
-            <a class="btn btn-info btn-sm me-2" href="/staff/products">Manage Products</a>
-            <a class="btn btn-success btn-sm me-2" href="/add_order">Add Order</a>
-        {% endif %}
+    <form class="form-inline ml-auto">
+      <a href="/logout" class="btn btn-danger">Logout</a>
+    </form>
 
-        <a class="btn btn-danger btn-sm" href="/logout">Logout</a>
-
-    {% else %}
-        <!-- NOT LOGGED IN → HIDE ALL BUTTONS -->
-        <span class="text-light">Please Login</span>
-    {% endif %}
+  {% endif %}
 </nav>
+
 
 <div class="container">
   {% with msgs = get_flashed_messages(with_categories=true) %}
