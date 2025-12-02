@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block content %}
+<h3>Staff Login History</h3>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Staff</th>
+            <th>Login Time</th>
+            <th>Logout Time</th>
+            <th>Duration</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for l in logs %}
+        <tr>
+            <td>{{ l.email }}</td>
+            <td>{{ l.login }}</td>
+            <td>{{ l.logout }}</td>
+            <td>{{ l.duration }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<a class="btn btn-primary" href="{{ url_for('dashboard') }}">Back</a>
+{% endblock %}

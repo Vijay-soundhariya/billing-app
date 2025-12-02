@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+{% block content %}
+<h2 class="fw-bold mb-3">Edit Order #{{ order.invoice_number or order.id }}</h2>
+
+<form method="post">
+  <div class="row g-2 mb-3">
+    <div class="col-md-6"><input class="form-control" name="customer_name" value="{{ customer.name }}" required></div>
+    <div class="col-md-6"><input class="form-control" name="customer_phone" value="{{ customer.phone }}" required></div>
+  </div>
+
+  <table class="table table-bordered">
+    <thead><tr><th>Product</th><th>Price</th><th>Available</th><th>Qty</th></tr></thead>
+    <tbody>
+      {% for p in products %}
+      <tr>
+        <td>{{ p.name }}</td>
+        <td id="price_{{ p.id }}">{{ "%.2f"|format(p.price) }}</td>
+        <td>{{ p.quantity }}</td>
+        <td><input type="number" name="qty_{{ p.id }}" min="0" value="{{ item_qty.get(p.id, 0) }}" class="form-control qty-input" style="width:100px;"></td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <div id="quick_total_preview" class="mb-3 fw-bold"></div>
+
+  <button class="btn btn-primary">Update Order</button>
+  <a href="{{ url_for('order_summary', order_id=order.id) }}" class="btn btn-secondary">Cancel</a>
+</form>
+
+<script>
+document.addEventListener('DOMContentLoaded', function(){
+  const qtyInputs = Array.from(document.querySelectorAll('.qty-input'));
+  if(qtyInputs.length) qtyInputs[0].focus();
+
+  qtyInputs.forEach((el, idx) => {
+    el.addEventListener('keydown', (e) => {
+      if(e.key === 'ArrowDown' || e.key === 'Enter'){
+        e.preventDefault();
+        const next = qtyInputs[idx+1];
+        if(next) next.focus();
+      } else if(e.key === 'ArrowUp'){
+        e.preventDefault();
+        const prev = qtyInputs[idx-1];
+        if(prev) prev.focus();
+      } else if(e.key === '+'){
+        e.preventDefault();
+        el.value = (parseInt(el.value||0) + 1);
+        recalc();
+      } else if(e.key === '-'){
+        e.preventDefault();
+        el.value = Math.max(0, (parseInt(el.value||0) - 1));
+        recalc();
+      } else if((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 's'){
+        e.preventDefault();
+        document.querySelector('form').submit();
+      }
+    });
+    el.addEventListener('input', recalc);
+  });
+
+  function recalc(){
+    let total = 0.0;
+    qtyInputs.forEach(input => {
+      const id = input.name.split('_')[1];
+      const price = parseFloat(document.getElementById('price_'+id).textContent || 0);
+      const qty = parseInt(input.value || 0);
+      total += price * qty;
+    });
+    const preview = document.getElementById('quick_total_preview');
+    if(preview) preview.textContent = 'Total: Rs.' + total.toFixed(2);
+  }
+  recalc();
+});
+</script>
+
+{% endblock %}
