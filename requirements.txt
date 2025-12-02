@@ -1,19 +1,6 @@
-<<<<<<< HEAD
-Flask==2.3.2
-Flask-Login==0.6.2
-Flask-Bcrypt==1.0.1
-Flask-SQLAlchemy==3.0.5
-SQLAlchemy==2.0.23
-Werkzeug==2.3.7
-fpdf==1.7.2
+Flask==3.0.0
+Flask-SQLAlchemy==3.1.1
+Werkzeug==3.0.1
 gunicorn==21.2.0
-=======
-Flask==2.3.2
-Flask-Login==0.6.2
-Flask-Bcrypt==1.0.1
-Flask-SQLAlchemy==3.0.5
-SQLAlchemy==2.0.23
-Werkzeug==2.3.7
-fpdf==1.7.2
-gunicorn==21.2.0
->>>>>>> 263a03c467594d985d8b96fece724ac1bd2f03e6
+reportlab==4.0.8
+PyPDF2==3.0.1
